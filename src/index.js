@@ -48,7 +48,7 @@ function ReactRateComponent(props) {
   const handleOnPress = rateIndex => {
     if (!props.edit) return;
     const activeIndex = rateIndex + 1;
-    setSymbols(getSymbols(rateIndex));
+    setSymbols(getSymbols(activeIndex));
     setValue(activeIndex);
     setRateCount(activeIndex);
     if (typeof props.onChange === "function") {
