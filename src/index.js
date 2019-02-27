@@ -87,7 +87,15 @@ function RenderSymbols({
   onMouseLeave,
   handleOnPress
 }) {
-  const { inactiveColor, activeColor, size, symbol, edit } = config;
+  const {
+    inactiveColor,
+    activeColor,
+    size,
+    symbol,
+    edit,
+    activeClass,
+    inactiveClass
+  } = config;
 
   const rateDefaultStyle = {
     position: "relative",
@@ -99,14 +107,23 @@ function RenderSymbols({
   };
 
   return symbols.map((rateSymbol, i) => {
-    const style = Object.assign({}, rateDefaultStyle, {
+    const style = {
+      ...rateDefaultStyle,
       color: rateSymbol.active ? activeColor : inactiveColor,
       cursor: edit ? "pointer" : "default",
       fontSize: `${size}px`
-    });
+    };
+
+    const className = rateSymbol.active ? activeClass : inactiveClass;
+
+    const symbolProps = {
+      style,
+      className
+    };
+
     return (
       <span
-        style={style}
+        {...symbolProps}
         key={i}
         rate-index={i}
         onMouseOver={() => onMouseOver(i)}
@@ -128,7 +145,9 @@ ReactRateComponent.propTypes = {
   symbol: PropTypes.string,
   size: PropTypes.number,
   inactiveColor: PropTypes.string,
-  activeColor: PropTypes.string
+  activeColor: PropTypes.string,
+  inactiveClass: PropTypes.string,
+  activeClass: PropTypes.string
 };
 
 ReactRateComponent.defaultProps = {
@@ -139,7 +158,9 @@ ReactRateComponent.defaultProps = {
   symbol: "★",
   size: 25,
   inactiveColor: "#949494",
-  activeColor: "#ffd700"
+  activeColor: "#ffd700",
+  inactiveClass: "",
+  activeClass: ""
 };
 
 RenderSymbols.propTypes = {
